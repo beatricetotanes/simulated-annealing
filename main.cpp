@@ -23,14 +23,16 @@ int main(){
         
         // toupper(char) Converts the letter that the user has entered into uppercase if it is in lowercase
         switch (toupper(schedule)) {
-            case 'a':
+            case 'a': // Linear
+                // reduParameter = alpha()
+                // termCriterion = termCriterion() 
                 stopper = 1;
                 break;
-            case 'b':
+            case 'b': // Geometric
                 ProgDescription(); // Goes to the function that explains briefly what the program does
                 stopper = 0;
                 break;
-            case 'c':
+            case 'c': // Slow Decrease
                 InfixPostfix(); // Turns expression to postfix and evaluates it
                 stopper = 0;
                 break;
