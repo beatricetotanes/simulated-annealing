@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "list_solution.h": "c",
+        "iostream": "cpp",
+        "limits": "cpp",
+        "istream": "cpp",
+        "__node_handle": "cpp",
+        "stack": "cpp",
+        "new": "cpp",
+        "ios": "cpp"
+    }
+}

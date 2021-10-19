@@ -1,13 +1,18 @@
 #include <iostream>
 #include <cctype>
 #include <stdlib.h>
-#include <limits>
-#include <string>
-#include <ios>
+#include "helper.h"
+
+using namespace std;
 
 int main(){
     int stopper = 0;
     char schedule;
+    float reduParameter;
+    char termination;
+    int dimension = 5;
+    list *solution = num_series(dimension);
+    list *tmp = solution;
 
     // While user chooses not to exit the program, the program will not exit.
     while (stopper == 0) {
@@ -20,20 +25,19 @@ int main(){
         cin >> schedule;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin.clear();
-        
+
         // toupper(char) Converts the letter that the user has entered into uppercase if it is in lowercase
-        switch (toupper(schedule)) {
+        switch (tolower(schedule)) {
             case 'a': // Linear
-                // reduParameter = alpha()
-                // termCriterion = termCriterion() 
+                reduParameter = alpha();
+                termination = termCriterion();
+                // compute(choice, termination)
                 stopper = 1;
                 break;
             case 'b': // Geometric
-                ProgDescription(); // Goes to the function that explains briefly what the program does
                 stopper = 0;
                 break;
             case 'c': // Slow Decrease
-                InfixPostfix(); // Turns expression to postfix and evaluates it
                 stopper = 0;
                 break;
             default: // Runs if user entered an invalid input
