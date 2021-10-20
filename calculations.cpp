@@ -31,7 +31,7 @@ void compute(float redu_parameter, char termination, char schedule, list *soluti
     float initial_temp = init_temp();
     float final_temp;
     list *new_solution = NULL, *tmp;
-    int K, k, i;
+    int K = 0, k = 0, i;
     float ofv_solution, ofv_new_solution, delta_f;
     float probability, z;
 
@@ -119,10 +119,17 @@ void compute(float redu_parameter, char termination, char schedule, list *soluti
                 {
                     solution = new_solution;
                 }
-
-                // printing
-                // cout << "Solution " << k+1 << ": " << griewank(solution) << endl;
+                
             }
+
+            // printing for testing
+            // cout << endl << "Solution: " << griewank(solution) << "List: " << endl;
+            // tmp = solution;
+            // for (i = 0; i < length(solution); i++)
+            // {
+            //     cout << tmp->num << endl;
+            //     tmp = tmp->next;
+            // }
 
             switch (schedule)
             {
@@ -139,7 +146,7 @@ void compute(float redu_parameter, char termination, char schedule, list *soluti
                 break;
             }
         }
-
+        cout << "Final Temperature: " << initial_temp << endl;
         cout << "Final Solution: " << griewank(solution) << endl;
         break;
     default:

@@ -100,9 +100,10 @@ float prob_density(float delta_f, float T){
 }
 
 void empty(list **solution){
-    list *tmp = *solution;
+    list *tmp;
     while (*solution != NULL)
     {   
+        tmp = *solution;
         *solution= (*solution)->next; //Moves the top position to the next node after the first node
         delete tmp;
     }

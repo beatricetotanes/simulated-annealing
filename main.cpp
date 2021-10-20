@@ -26,7 +26,6 @@ int main(){
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin.clear();
 
-        // toupper(char) Converts the letter that the user has entered into uppercase if it is in lowercase
         switch (tolower(schedule)) {
             case 'a': // Linear
                 reduParameter = alpha();
@@ -54,6 +53,7 @@ int main(){
     }
 
     compute(reduParameter, termination, tolower(schedule), solution);
+    empty(&solution); // empties list
     
     return 0;
 }
