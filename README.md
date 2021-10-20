@@ -5,4 +5,25 @@ There are 6 files in this homework.
 
 <b>1. Main.cpp</b> 
 </br>
-<t>Contains main file where user chooses termination schedule and enters reduction parameter</t>
+- Contains main file where user chooses termination schedule and enters reduction parameter
+</br>
+<b>2. Helper.h</b> 
+</br>
+- Contains function declarations for helper functions
+</br>
+<b>3. Helper.cpp</b> 
+</br>
+- Contains function definitions for helper functions
+</br>
+<b>4. Calculations.h</b> 
+</br>
+- Contains function definitions for functions in charge of calculations
+</br>
+<b>5. Calculations.cpp</b> 
+</br>
+- Contains function declarations for functions in charge of calculations
+</br>
+<b>6. Structures.h</b> 
+</br>
+- Contains struct type definitions
+
