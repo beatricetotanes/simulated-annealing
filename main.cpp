@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cctype>
 #include <stdlib.h>
-#include "helper.h"
+#include "calculations.h"
 
 using namespace std;
 
@@ -35,10 +35,16 @@ int main(){
                 stopper = 1;
                 break;
             case 'b': // Geometric
-                stopper = 0;
+                reduParameter = alpha();
+                termination = termCriterion();
+                // geometric(reduParameter, termination, solution);
+                stopper = 1;
                 break;
             case 'c': // Slow Decrease
-                stopper = 0;
+                reduParameter = beta();
+                termination = termCriterion();
+                // slow_decrease_func(reduParameter, termination, solution);
+                stopper = 1;
                 break;
             default: // Runs if user entered an invalid input
                 stopper = 0;
@@ -46,5 +52,8 @@ int main(){
         }
         
     }
+
+    compute(reduParameter, termination, tolower(schedule), solution);
+    
     return 0;
 }

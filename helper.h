@@ -12,3 +12,4 @@ list *newNode(float num);
 void empty(list **solution);
 int length(list *solution);
 
+

@@ -26,11 +26,14 @@ trials_cycles max_trials_cycles(){
     return temp;
 }
 
-float linear(float alpha, char termination, list *solution){
+void compute(float redu_parameter, char termination, char schedule, list *solution){
     trials_cycles basis;
     float initial_temp = init_temp();
     float final_temp;
-    int K, k;
+    list *new_solution = NULL, *tmp;
+    int K, k, i;
+    float ofv_solution, ofv_new_solution, delta_f;
+    float probability, z;
 
     switch (termination)
     {
@@ -38,23 +41,108 @@ float linear(float alpha, char termination, list *solution){
         basis = max_trials_cycles();
         for (K = 0; K < basis.cycles; K++)
         {
-            cout << "Cycle: " << K << "Temperature: " << initial_temp;
-            cout << "Obj Func Value is: " << griewank(solution);
+            cout << "[Cycle: " << K << "] [Temperature: " << initial_temp << "]"<< endl;
+            cout << "Obj Func Value is: " << griewank(solution) << endl << endl;
             for (k = 0; k < basis.trials; k++)
             {
-                /* code */
+                new_solution = num_series(length(solution)); // temporary till magreply si maam
+
+                // calculate objective func values of two solutions
+                ofv_solution = griewank(solution);
+                ofv_new_solution = griewank(solution);
+
+                // calculate delta f
+                delta_f = ofv_new_solution - ofv_solution;
+
+                if (delta_f < 0)
+                {
+                    solution = new_solution;
+                }else
+                {
+                    probability = prob_density(delta_f, initial_temp);
+                    z = griewank_generate(0, 1);
+                    if (z < probability)
+                    {
+                        solution = new_solution;
+                    }
+
+                    // printing
+                    // cout << "Solution " << k+1 << ": " << griewank(solution) << endl;
+                }
             }
-            
+
+            switch (schedule)
+            {
+            case 'a': // linear
+                initial_temp = initial_temp - redu_parameter; // uses alpha
+                break;
+            case 'b': // geometric
+                initial_temp = initial_temp * redu_parameter; // uses alpha
+                break;
+            case 'c': // slow decrease
+                initial_temp = initial_temp / (1 + redu_parameter*initial_temp); // uses beta
+                break;
+            default:
+                break;
+            }
         }
+
+        cout << "Final Solution: " << griewank(solution) << endl;
         
         break;
     case 'b': // temperatures
         cout << "\nEnter Final Temperature: ";
         cin >> final_temp;
+
+        while(initial_temp > final_temp)
+        {
+            cout << "Temperature: " << initial_temp << endl;
+            cout << "Obj Func Value is: " << griewank(solution) << endl << endl;
+
+            new_solution = num_series(length(solution)); // temporary till magreply si maam
+
+            // calculate objective func values of two solutions
+            ofv_solution = griewank(solution);
+            ofv_new_solution = griewank(solution);
+
+            // calculate delta f
+            delta_f = ofv_new_solution - ofv_solution;
+
+            if (delta_f < 0)
+            {
+                solution = new_solution;
+            }else
+            {
+                probability = prob_density(delta_f, initial_temp);
+                z = griewank_generate(0, 1);
+                if (z < probability)
+                {
+                    solution = new_solution;
+                }
+
+                // printing
+                // cout << "Solution " << k+1 << ": " << griewank(solution) << endl;
+            }
+
+            switch (schedule)
+            {
+            case 'a': // linear
+                initial_temp = initial_temp - redu_parameter; // uses alpha
+                break;
+            case 'b': // geometric
+                initial_temp = initial_temp * redu_parameter; // uses alpha
+                break;
+            case 'c': // slow decrease
+                initial_temp = initial_temp / (1 + redu_parameter*initial_temp); // uses beta
+                break;
+            default:
+                break;
+            }
+        }
+
+        cout << "Final Solution: " << griewank(solution) << endl;
         break;
     default:
         break;
     }
 }
-float geometric(float alpha, char termination, list *solution);
-float slow_decrease(float beta, char termination, list *solution);

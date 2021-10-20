@@ -72,6 +72,7 @@ int length(list *solution){
     return ctr;
 }
 
+// generates random numbers
 float griewank_generate(float lb, float ub){
     float ans; 
     ans = ((float)rand()/(float)RAND_MAX)*(ub - lb);
