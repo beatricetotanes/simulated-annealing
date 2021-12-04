@@ -49,7 +49,7 @@ void compute(float redu_parameter, char termination, char schedule, list *soluti
 
                 // calculate objective func values of two solutions
                 ofv_solution = griewank(solution);
-                ofv_new_solution = griewank(solution);
+                ofv_new_solution = griewank(new_solution);
 
                 // calculate delta f
                 delta_f = ofv_new_solution - ofv_solution;
