@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cctype>
+#include <limits>
 #include <stdlib.h>
 #include "calculations.h"
 
@@ -50,10 +51,10 @@ int main(){
                 stopper = 0;
                 printf("Invalid input.\n"); //Prints message if user inputs a value other than the ones indicated in the menu
         }
-        
     }
 
     compute(reduParameter, termination, tolower(schedule), solution);
+	system("pause");
     
     return 0;
 }
