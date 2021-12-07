@@ -119,8 +119,8 @@ void calcTrialsCycles(float reduxParam, float initialTemp, char schedule, std::d
 
 	std::cout << "Final Solution: " << griewank(solution) << std::endl;
 	std::cout << "Solution set: [ ";
-	for(float val: solution){
-		std::cout << val << " ";
+	for(int i = 0; i < 5; i++){
+		std::cout << solution.at(i) << " ";
 	}
 	std::cout << "]" << std::endl;
 }
@@ -163,8 +163,8 @@ void calcFinalTemp(float reduxParam, float initialTemp, char schedule, std::dequ
 
 	std::cout << "Final Solution: " << griewank(solution) << std::endl;
 	std::cout << "Solution set: [ ";
-	for(float val: solution){
-		std::cout << val << " ";
+	for(int i = 0; i < 5; i++){
+		std::cout << solution.at(i) << " ";
 	}
 	std::cout << "]";
 }
