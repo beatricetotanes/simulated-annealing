@@ -161,10 +161,13 @@ void calcFinalTemp(float reduxParam, float initialTemp, char schedule, std::dequ
 		initialTemp = changeTemp(schedule, initialTemp, reduxParam);
 	}
 
+	std::cout << "Temperature: " << initialTemp << std::endl;
+	std::cout << "Object Function Value is: " << griewank(solution) << "\n\n";
+
 	std::cout << "Final Solution: " << griewank(solution) << std::endl;
 	std::cout << "Solution set: [ ";
 	for(int i = 0; i < 5; i++){
 		std::cout << solution.at(i) << " ";
 	}
-	std::cout << "]";
+	std::cout << "]" << std::endl;
 }
