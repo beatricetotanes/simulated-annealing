@@ -60,7 +60,7 @@ float griewank(std::deque<float> solution){
  * @param T The temperature
  * @return the probability of acceptance
  */
-float prob_density(float delta_f, float T){
+float getProbability(float delta_f, float T){
 	return std::exp(-1 * (delta_f/T));
 }
 
@@ -109,7 +109,7 @@ void calcTrialsCycles(float reduxParam, float initialTemp, char schedule, std::d
 			if(delta_f < 0){
 				solution = newSolution;
 			}else {
-				probability = prob_density(delta_f, initialTemp);
+				probability = getProbability(delta_f, initialTemp);
 				z = griewankGenerate(0,1);
 				if(z < probability){
 					solution = newSolution;
@@ -149,7 +149,7 @@ void calcFinalTemp(float reduxParam, float initialTemp, char schedule, std::dequ
 		if(delta_f < 0){
 			solution = newSolution;
 		}else {
-			probability = prob_density(delta_f, initialTemp);
+			probability = getProbability(delta_f, initialTemp);
 			z = griewankGenerate(0,1);
 			if(z < probability){
 				solution = newSolution;
