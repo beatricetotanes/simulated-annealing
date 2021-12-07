@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @author Hermo, Andrew Louis and Totanes, Beatrice
- * @brief Performs simulated annealing based on the temperature schedule the user specifies
+ * @brief Performs simulated annealing based on the temperature schedule the user specifies.
  * @version 1.1
  * @date 2021-12-04
  * 
@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <ctime>
 #include <deque>
-#include <iterator>
 #include "util.h"
 #include "calculations.h"
 
@@ -23,10 +22,11 @@ int main(){
 	static float reduxParam;
 	static bool isTerminationMaxTAC;
 	float initialTemp;
-	std::deque<float> initialSolution = generateSeries();
-	std::srand(time(0));
+	std::srand(time(NULL));
+	std::deque<float> initialSolution;
 
 	while(1){
+		initialSolution = generateSeries(true);
 		std::cout << "\t---Simulated Annealing--\n" << std::endl;
 		std::cout << "\t[1] Linear Schedule" << std::endl;
 		std::cout << "\t[2] Geometric Schedule" << std::endl;
@@ -61,12 +61,6 @@ int main(){
 		}
 		initialTemp = setInitialTemp();
 		if(isTerminationMaxTAC){
-			std::cout << "reduxParam: " << reduxParam << std::endl;
-			std::cout << "initTemp: " << initialTemp << std::endl;
-			std::cout << "sched: " << schedule << std::endl;
-			for(float n: initialSolution){
-				std::cout << n << std::endl;
-			}
 			calcTrialsCycles(reduxParam, initialTemp, schedule, initialSolution);
 		}else {
 			calcFinalTemp(reduxParam, initialTemp, schedule, initialSolution);

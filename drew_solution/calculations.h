@@ -1,7 +1,7 @@
 #include <iostream>
 #include <deque>
 
-std::deque<float> generateSeries();
+std::deque<float> generateSeries(bool isInitial);
 float changeTemp(char schedule, float prevTemp, float reduxParam);
 float griewankGenerate(float lb, float ub);
 float griewank(std::deque<float> solution);

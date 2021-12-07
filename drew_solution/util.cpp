@@ -14,9 +14,9 @@
 float setTempReduxParam(bool isAlpha){
 	float val = 0.0;
 	do{ // Loops until the user inputs a valid float value
-		std::cout << "\t\nSpecify value of " << (isAlpha ? "alpha:" : "beta:");
+		std::cout << "\t\nSpecify value of " << (isAlpha ? "alpha: " : "beta: ");
 		std::cin >> val;
-		if(!std::cin.fail()){
+		if(!std::cin.fail() && val > 0){
 			break;
 		}
 		std::cin.clear();
