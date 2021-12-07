@@ -3,6 +3,7 @@
 #include <random>
 #include <math.h>
 #include <ctime>
+#include <chrono>
 #include <iomanip>
 #include "util.h"
 #include "calculations.h"
@@ -16,7 +17,7 @@ std::deque<float> generateSeries(){
 	int dimension = 5;
 	std::deque<float> solution;
 	for(int i = 0; i < dimension; i++){
-		solution.push_back(griewank_generate(-5.0,5.0));
+		solution.push_back(griewankGenerate(-5.0,5.0));
 	}
 	return solution;
 }
@@ -28,10 +29,10 @@ std::deque<float> generateSeries(){
  * @param ub The upper bound value
  * @return a random float value
  */
-float griewank_generate(float lb, float ub){
-	std::random_device rd;
-	std::default_random_engine eng(rd());
+float griewankGenerate(float lb, float ub){
+	std::default_random_engine eng{static_cast<long unsigned int>(std::chrono::high_resolution_clock::now().time_since_epoch().count())};
 	std::uniform_real_distribution<float> distr(0,1);
+	// float randomNum = (float)(std::rand())/((float)(RAND_MAX)/1);
 	return lb + distr(eng)*(ub - lb);
 }
 
@@ -47,7 +48,7 @@ float griewank(std::deque<float> solution){
 	int length = solution.size();
 	for(int i = 0; i < length; i++){
 		summation += (solution.at(i) * solution.at(i))/4000;
-		product *= std::cos(solution.at(i)/(float)std::sqrt(i+1));
+		product *= std::cos(solution.at(i)/std::sqrt(i+1));
 	}
 	return summation - product + 1;
 }
@@ -74,7 +75,7 @@ float prob_density(float delta_f, float T){
 float changeTemp(char schedule, float prevTemp, float reduxParam){
 	switch(schedule){
 		case '1':
-			return (float)prevTemp - (float)reduxParam;
+			return prevTemp - reduxParam;
 		case '2':
 			return prevTemp * reduxParam;
 		default:
@@ -95,7 +96,7 @@ void calcTrialsCycles(float reduxParam, float initialTemp, char schedule, std::d
 	std::deque<float> newSolution;
 	float ofv_solution, ofv_new_solution, delta_f, probability, z;
 	for(int cycle = 1; cycle <= trialsAndCycles.second; ++cycle){
-		std::cout << "[Cycle: " << cycle << "] [Temperature: " << initialTemp << "]" << std::endl;
+		std::cout << "[Cycle: " << cycle << "] [Temperature: " << std::setprecision(6) << initialTemp << "]" << std::endl;
 		std::cout << "Object Function Value is: " << griewank(solution) << "\n\n";
 		for(int trial = 1; trial <= trialsAndCycles.first; ++trial){
 			newSolution = generateSeries();
@@ -109,13 +110,14 @@ void calcTrialsCycles(float reduxParam, float initialTemp, char schedule, std::d
 				solution = newSolution;
 			}else {
 				probability = prob_density(delta_f, initialTemp);
-				z = griewank_generate(0,1);
+				z = griewankGenerate(0,1);
 				if(z < probability){
 					solution = newSolution;
 				}
 			}
+
+			initialTemp = changeTemp(schedule, initialTemp, reduxParam);
 		}
-		initialTemp = changeTemp(schedule, initialTemp, reduxParam);
 	}
 
 	std::cout << "Final Solution: " << griewank(solution) << std::endl;
@@ -148,7 +150,7 @@ void calcFinalTemp(float reduxParam, float initialTemp, char schedule, std::dequ
 			solution = newSolution;
 		}else {
 			probability = prob_density(delta_f, initialTemp);
-			z = griewank_generate(0,1);
+			z = griewankGenerate(0,1);
 			if(z < probability){
 				solution = newSolution;
 			}
